@@ -19,7 +19,9 @@ const IssuerName = "myst-sentinel"
 
 // NewIssuerJWT returns a new IssuerJWT object.
 func NewIssuerJWT(privateKey []byte) *IssuerJWT {
-	jwt.TimeFunc = time.Now().UTC
+	jwt.TimeFunc = func() time.Time {
+		return time.Now().UTC()
+	}
 
 	return &IssuerJWT{
 		privateKey: privateKey,

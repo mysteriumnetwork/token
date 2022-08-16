@@ -15,7 +15,9 @@ type ValidatorJWT struct {
 
 // NewValidatorJWT returns a new JWT validator.
 func NewValidatorJWT(publicKey []byte) *ValidatorJWT {
-	jwt.TimeFunc = time.Now().UTC
+	jwt.TimeFunc = func() time.Time {
+		return time.Now().UTC()
+	}
 
 	return &ValidatorJWT{
 		publicKey: publicKey,
