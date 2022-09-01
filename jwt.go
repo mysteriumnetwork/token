@@ -23,6 +23,7 @@ type ClaimData struct {
 	Issuer     string
 	Audience   string
 	Subject    string
+	Attributes string
 }
 
 // ParsedAudience will parse audience into a string map.
