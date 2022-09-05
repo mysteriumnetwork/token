@@ -47,7 +47,7 @@ func Test_JWT(t *testing.T) {
 		aud := "pool1"
 		typ := "password"
 		sub := uuid.New().String()
-		token, err := jwt.Issue(sub, aud, typ, time.Hour)
+		token, err := jwt.Issue(sub, aud, typ, time.Hour, "")
 		assert.NoError(t, err)
 
 		err = jwt.Validate(token)
@@ -58,7 +58,7 @@ func Test_JWT(t *testing.T) {
 		aud := "pool1"
 		typ := "password"
 		sub := uuid.New().String()
-		token, err := jwt.Issue(sub, aud, typ, time.Hour)
+		token, err := jwt.Issue(sub, aud, typ, time.Hour, "")
 		assert.NoError(t, err)
 
 		err = jwt.ValidateForAudience(token, aud)
@@ -69,7 +69,7 @@ func Test_JWT(t *testing.T) {
 		aud := "pool1"
 		typ := "password"
 		sub := uuid.New().String()
-		token, err := jwt.Issue(sub, aud, typ, time.Hour)
+		token, err := jwt.Issue(sub, aud, typ, time.Hour, "")
 		assert.NoError(t, err)
 
 		d, err := jwt.ValidateExtract(token)
