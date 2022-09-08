@@ -61,7 +61,7 @@ func (j *ValidatorJWT) validate(token string, aud *string) (*ClaimData, error) {
 		return nil, fmt.Errorf("validate: parse key: %w", err)
 	}
 
-	tok, err := jwt.Parse(token, func(jwtToken *jwt.Token) (interface{}, error) {
+	tok, err := jwt.Parse(token, func(jwtToken *jwt.Token) (any, error) {
 		if _, ok := jwtToken.Method.(*jwt.SigningMethodRSA); !ok {
 			return nil, fmt.Errorf("unexpected method %q: %w", jwtToken.Header["alg"], ErrTokenInvalid)
 		}
@@ -86,7 +86,10 @@ func (j *ValidatorJWT) validate(token string, aud *string) (*ClaimData, error) {
 		return nil, fmt.Errorf("audience missmatch: %w", ErrTokenInvalid)
 	}
 
-	caud, _ := claims["aud"].(string)
+	caud := make([]string, 0)
+	for _, c := range claims["aud"].([]any) {
+		caud = append(caud, c.(string))
+	}
 	ciss, _ := claims["iss"].(string)
 	csub, _ := claims["sub"].(string)
 	attr, _ := claims["attr"].(string)

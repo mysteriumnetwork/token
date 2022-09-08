@@ -44,7 +44,7 @@ func Test_JWT(t *testing.T) {
 
 	jwt := NewJWT(validator, issuer)
 	t.Run("issue and validate with no aud", func(t *testing.T) {
-		aud := "pool1"
+		aud := []string{"pool1"}
 		typ := "password"
 		sub := uuid.New().String()
 		token, err := jwt.Issue(sub, aud, typ, time.Hour, "")
@@ -55,18 +55,22 @@ func Test_JWT(t *testing.T) {
 	})
 
 	t.Run("issue and validate with aud", func(t *testing.T) {
-		aud := "pool1"
+		aud := []string{"pool1", "pool2"}
 		typ := "password"
 		sub := uuid.New().String()
 		token, err := jwt.Issue(sub, aud, typ, time.Hour, "")
 		assert.NoError(t, err)
 
-		err = jwt.ValidateForAudience(token, aud)
+		err = jwt.ValidateForAudience(token, "pool1")
 		assert.NoError(t, err)
+		err = jwt.ValidateForAudience(token, "pool2")
+		assert.NoError(t, err)
+		err = jwt.ValidateForAudience(token, "pool3")
+		assert.Error(t, err)
 	})
 
 	t.Run("issue and extract data", func(t *testing.T) {
-		aud := "pool1"
+		aud := []string{"pool1"}
 		typ := "password"
 		sub := uuid.New().String()
 		token, err := jwt.Issue(sub, aud, typ, time.Hour, "")
