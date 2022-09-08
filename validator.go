@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt/v4"
 )
 
 // ValidatorJWT validates given tokens.
@@ -29,7 +29,7 @@ var (
 	ErrTokenInvalid = errors.New("token is invalid")
 )
 
-// Validate will validate a given token to check it has the correct
+// ValidateForAudience will validate a given token to check it has the correct
 // signature, hasn't expired and and was created/signed by the sentinel.
 //
 // It will also check that the audience claim matches the given one.
