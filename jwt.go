@@ -1,7 +1,5 @@
 package token
 
-import "strings"
-
 // JWT wraps both an issuer and validator inside
 // a single object for easier handling.
 type JWT struct {
@@ -21,13 +19,8 @@ func NewJWT(v *ValidatorJWT, i *IssuerJWT) *JWT {
 type ClaimData struct {
 	IssuerType string
 	Issuer     string
-	Audience   string
+	Audience   []string
 	Subject    string
 	ExpiresAt  float64
 	Attributes string
-}
-
-// ParsedAudience will parse audience into a string map.
-func (c *ClaimData) ParsedAudience() []string {
-	return strings.Split(c.Audience, ",")
 }
