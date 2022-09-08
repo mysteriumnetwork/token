@@ -78,6 +78,7 @@ func Test_JWT(t *testing.T) {
 		assert.Equal(t, sub, d.Subject)
 		assert.Equal(t, IssuerName, d.Issuer)
 		assert.Equal(t, typ, d.IssuerType)
+		assert.Greater(t, d.ExpiresAt, float64(time.Now().Unix()))
 
 	})
 

@@ -90,7 +90,7 @@ func (j *ValidatorJWT) validate(token string, aud *string) (*ClaimData, error) {
 	ciss, _ := claims["iss"].(string)
 	csub, _ := claims["sub"].(string)
 	attr, _ := claims["attr"].(string)
-	exp, _ := claims["exp"].(int64)
+	exp, _ := claims["exp"].(float64)
 	isstype, _ := claims[CustomClaimIssuerType].(string)
 
 	return &ClaimData{
