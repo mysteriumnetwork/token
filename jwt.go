@@ -23,7 +23,7 @@ type ClaimData struct {
 	Issuer     string
 	Audience   string
 	Subject    string
-	ExpiresAt  int64
+	ExpiresAt  float64
 	Attributes string
 }
 
