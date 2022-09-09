@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"
+	"github.com/google/uuid"
 )
 
 // IssuerJWT issues JWT tokens.
@@ -28,8 +29,6 @@ func NewIssuerJWT(privateKey []byte) *IssuerJWT {
 	}
 }
 
-type CustomClaim string
-
 const (
 	CustomClaimIssuerType = "isst"
 )
@@ -46,6 +45,7 @@ func (j *IssuerJWT) Issue(sub string, aud []string, issuertype string, ttl time.
 	}
 
 	now := jwt.TimeFunc()
+	id := uuid.New()
 	claims := jwt.MapClaims{
 		"exp":                 now.Add(ttl).Unix(),
 		"iat":                 now.Unix(),
@@ -54,6 +54,7 @@ func (j *IssuerJWT) Issue(sub string, aud []string, issuertype string, ttl time.
 		"aud":                 aud,
 		"sub":                 sub,
 		"attr":                attr,
+		"jti":                 id.String(),
 		CustomClaimIssuerType: issuertype,
 	}
 

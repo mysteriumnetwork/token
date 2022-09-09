@@ -82,8 +82,22 @@ func Test_JWT(t *testing.T) {
 		assert.Equal(t, sub, d.Subject)
 		assert.Equal(t, IssuerName, d.Issuer)
 		assert.Equal(t, typ, d.IssuerType)
+		_, err = uuid.Parse(d.ID)
+		assert.NoError(t, err)
 		assert.Greater(t, d.ExpiresAt, float64(time.Now().Unix()))
-
+		assert.LessOrEqual(t, d.IssuedAt, float64(time.Now().Unix()))
 	})
 
+	t.Run("expired token invalid", func(t *testing.T) {
+		aud := []string{"pool1"}
+		typ := "password"
+		sub := uuid.New().String()
+		token, err := jwt.Issue(sub, aud, typ, time.Millisecond, "")
+		assert.NoError(t, err)
+
+		time.Sleep(10 * time.Millisecond)
+
+		err = jwt.Validate(token)
+		assert.Error(t, err)
+	})
 }
