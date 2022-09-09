@@ -19,8 +19,10 @@ func NewJWT(v *ValidatorJWT, i *IssuerJWT) *JWT {
 type ClaimData struct {
 	IssuerType string
 	Issuer     string
+	IssuedAt   float64
 	Audience   []string
 	Subject    string
 	ExpiresAt  float64
 	Attributes string
+	ID         string
 }
