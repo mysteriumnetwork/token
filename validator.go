@@ -39,6 +39,18 @@ func (j *ValidatorJWT) ValidateForAudience(token, aud string) error {
 	return err
 }
 
+// ValidateForAudienceExtract will validate a given token to check it has the correct
+// signature, hasn't expired and and was created/signed by the sentinel.
+//
+// It will also check that the audience claim matches the given one.
+// Audience claim is case insensitive
+//
+// It will also pull data which the caller can use for additional validation
+// or user data lookup.
+func (j *ValidatorJWT) ValidateForAudienceExtract(token, aud string) (*ClaimData, error) {
+	return j.validate(token, &aud)
+}
+
 // Validate will validate a given token to check it has the correct
 // signature, hasn't expired and and was created/signed by the sentinel.
 func (j *ValidatorJWT) Validate(token string) error {
