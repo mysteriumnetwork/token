@@ -34,7 +34,7 @@ const (
 )
 
 // Issue will issue a new JWT token setting given parameters inside the claims.
-func (j *IssuerJWT) Issue(sub string, aud []string, issuertype string, ttl time.Duration, attr string) (string, error) {
+func (j *IssuerJWT) Issue(sub string, aud []string, issuertype string, ttl time.Duration, attr string, username string) (string, error) {
 	if sub == "" || len(aud) < 1 || issuertype == "" {
 		return "", errors.New("'sub', 'aud', 'issuertype' claims must be set")
 	}
@@ -55,6 +55,7 @@ func (j *IssuerJWT) Issue(sub string, aud []string, issuertype string, ttl time.
 		"sub":                 sub,
 		"attr":                attr,
 		"jti":                 id.String(),
+		"username":            username,
 		CustomClaimIssuerType: issuertype,
 	}
 

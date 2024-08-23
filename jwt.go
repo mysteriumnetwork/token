@@ -25,4 +25,5 @@ type ClaimData struct {
 	ExpiresAt  float64
 	Attributes string
 	ID         string
+	Username   string
 }
