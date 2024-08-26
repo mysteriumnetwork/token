@@ -1,4 +1,4 @@
-module github.com/mysteriumnetwork/token
+module github.com/mysteriumnetwork/token/v2
 
 go 1.18
 
