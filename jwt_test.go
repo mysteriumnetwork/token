@@ -47,7 +47,7 @@ func Test_JWT(t *testing.T) {
 		aud := []string{"pool1"}
 		typ := "password"
 		sub := uuid.New().String()
-		token, err := jwt.Issue(sub, aud, typ, time.Hour, "")
+		token, err := jwt.Issue(sub, aud, typ, time.Hour, "", "username1")
 		assert.NoError(t, err)
 
 		err = jwt.Validate(token)
@@ -58,7 +58,7 @@ func Test_JWT(t *testing.T) {
 		aud := []string{"pool1", "pool2"}
 		typ := "password"
 		sub := uuid.New().String()
-		token, err := jwt.Issue(sub, aud, typ, time.Hour, "")
+		token, err := jwt.Issue(sub, aud, typ, time.Hour, "", "username1")
 		assert.NoError(t, err)
 
 		err = jwt.ValidateForAudience(token, "pool1")
@@ -73,7 +73,7 @@ func Test_JWT(t *testing.T) {
 		aud := []string{"pool1"}
 		typ := "password"
 		sub := uuid.New().String()
-		token, err := jwt.Issue(sub, aud, typ, time.Hour, "")
+		token, err := jwt.Issue(sub, aud, typ, time.Hour, "", "username1")
 		assert.NoError(t, err)
 
 		d, err := jwt.ValidateExtract(token)
@@ -82,6 +82,7 @@ func Test_JWT(t *testing.T) {
 		assert.Equal(t, sub, d.Subject)
 		assert.Equal(t, IssuerName, d.Issuer)
 		assert.Equal(t, typ, d.IssuerType)
+		assert.Equal(t, "username1", d.Username)
 		_, err = jwt.ValidateForAudienceExtract(token, "pool2")
 		assert.Error(t, err)
 		d, err = jwt.ValidateForAudienceExtract(token, aud[0])
@@ -100,7 +101,7 @@ func Test_JWT(t *testing.T) {
 		aud := []string{"pool1"}
 		typ := "password"
 		sub := uuid.New().String()
-		token, err := jwt.Issue(sub, aud, typ, time.Millisecond, "")
+		token, err := jwt.Issue(sub, aud, typ, time.Millisecond, "", "username1")
 		assert.NoError(t, err)
 
 		time.Sleep(10 * time.Millisecond)

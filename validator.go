@@ -108,6 +108,7 @@ func (j *ValidatorJWT) validate(token string, aud *string) (*ClaimData, error) {
 	exp, _ := claims["exp"].(float64)
 	iat, _ := claims["iat"].(float64)
 	jti, _ := claims["jti"].(string)
+	username, _ := claims["username"].(string)
 	isst, _ := claims[CustomClaimIssuerType].(string)
 
 	return &ClaimData{
@@ -119,6 +120,7 @@ func (j *ValidatorJWT) validate(token string, aud *string) (*ClaimData, error) {
 		Attributes: attr,
 		ID:         jti,
 		IssuedAt:   iat,
+		Username:   username,
 	}, nil
 }
 
